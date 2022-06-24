@@ -12,6 +12,7 @@ app.use(morgan('dev'));
 // Routes
 app.use(require('./routes/asientos'));
 app.use(require('./routes/buses'));
+app.use(require('./routes/usuarios'));
 
 // Starting the server
 app.listen(app.get('port'), () => {
