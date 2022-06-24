@@ -133,10 +133,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `rutaAddOrEdit` (IN `_id` INT, IN `_
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(40), IN `_apellido` VARCHAR(40), IN `_tipo_doc` VARCHAR(40), IN `_num_doc` INT(40), IN `_email` VARCHAR(40), IN `_password` VARCHAR(40), IN `_rol` VARCHAR(40))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(40), IN `_apellido` VARCHAR(40), IN `_tipo_doc` VARCHAR(40), IN `_num_doc` INT(40), IN `_email` VARCHAR(40), IN `_clave` VARCHAR(40), IN `_rol` VARCHAR(40))   BEGIN 
   IF _id = 0 THEN
-    INSERT INTO usuario (nombre, apellido, tipo_doc, num_doc, email, contraseña, rol)
-    VALUES (_nombre, _apellido, _tipo_doc, _num_doc, _email, _password, _rol);
+    INSERT INTO usuario (nombre, apellido, tipo_doc, num_doc, email, clave, rol)
+    VALUES (_nombre, _apellido, _tipo_doc, _num_doc, _email, _clave, _rol);
 
     SET _id = LAST_INSERT_ID();
   ELSE
@@ -147,7 +147,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioAddOrEdit` (IN `_id` INT, IN
     tipo_doc = _tipo_doc,
     num_doc = _num_doc,
     email = _email,
-    password = _password,
+    clave = _clave,
     rol = _rol
     WHERE id = _id;
   END IF;
@@ -289,9 +289,9 @@ CREATE TABLE `usuario` (
   `nombre` varchar(40) DEFAULT NULL,
   `apellido` varchar(40) DEFAULT NULL,
   `tipo_doc` varchar(40) DEFAULT NULL,
-  `num_doc` int(100) DEFAULT NULL,
+  `num_doc` int(40) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
-  `password` varchar(40) DEFAULT NULL,
+  `clave` varchar(40) DEFAULT NULL,
   `rol` varchar(40) DEFAULT 'pasajero'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -299,7 +299,7 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `tipo_doc`, `num_doc`, `email`, `password`, `rol`) VALUES
+INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `tipo_doc`, `num_doc`, `email`, `clave`, `rol`) VALUES
 (1, 'emanuel', 'zapata', 'cc', 1062274311, 'emanuelzapata792@gmail.com', 'rgrgdrhdrh43363g', 'admin');
 
 -- --------------------------------------------------------
