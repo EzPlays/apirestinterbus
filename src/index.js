@@ -1,6 +1,10 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors'); // importar los encabezados cors
+
+
 const app = express();
+
 
 // Settings
 app.set('port', process.env.PORT || 3000);
@@ -8,6 +12,7 @@ app.set('port', process.env.PORT || 3000);
 // Middlewares
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 // Routes
 app.use(require('./routes/asientos'));
