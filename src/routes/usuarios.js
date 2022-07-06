@@ -15,8 +15,9 @@ router.get('/usuarios', (req, res) => {
 });
 
 router.get('/usuarios/desp', (req, res) => {
-  const {id, email, clave, rol} = req.body;
-  mysqlConnection.query('SELECT id, email, clave, rol FROM usuario WHERE email = ?',[email], 'and clave = ?',[clave],  (err, rows, fields) => {
+  // const {id, email, clave, rol} = req.body;
+  rol = "despachador"
+  mysqlConnection.query('SELECT * FROM usuario WHERE rol = ?',[rol],  (err, rows, fields) => {
     if(!err) {
       res.json(rows);
     } else {
