@@ -14,6 +14,7 @@ router.get('/usuarios', (req, res) => {
   });  
 });
 
+// Get user rol despachador
 router.get('/usuarios/desp', (req, res) => {
   // const {id, email, clave, rol} = req.body;
   rol = "despachador"
@@ -26,7 +27,59 @@ router.get('/usuarios/desp', (req, res) => {
   });  
 });
 
-// GET An asientos
+// Get user rol conductor
+router.get('/usuarios/conduc', (req, res) => {
+  // const {id, email, clave, rol} = req.body;
+  rol = "conductor"
+  mysqlConnection.query('SELECT * FROM usuario WHERE rol = ?',[rol],  (err, rows, fields) => {
+    if(!err) {
+      res.json(rows);
+    } else {
+      console.log(err);
+    }
+  });  
+});
+
+// Get user rol pasajero
+router.get('/usuarios/pasa', (req, res) => {
+  // const {id, email, clave, rol} = req.body;
+  rol = "pasajero"
+  mysqlConnection.query('SELECT * FROM usuario WHERE rol = ?',[rol],  (err, rows, fields) => {
+    if(!err) {
+      res.json(rows);
+    } else {
+      console.log(err);
+    }
+  });  
+});
+
+// Get user rol jefe de rodamiento
+router.get('/usuarios/jefe', (req, res) => {
+  // const {id, email, clave, rol} = req.body;
+  rol = "jefe de rodamiento"
+  mysqlConnection.query('SELECT * FROM usuario WHERE rol = ?',[rol],  (err, rows, fields) => {
+    if(!err) {
+      res.json(rows);
+    } else {
+      console.log(err);
+    }
+  });  
+});
+
+// Get user rol admin
+router.get('/usuarios/admin', (req, res) => {
+  // const {id, email, clave, rol} = req.body;
+  rol = "admin"
+  mysqlConnection.query('SELECT * FROM usuario WHERE rol = ?',[rol],  (err, rows, fields) => {
+    if(!err) {
+      res.json(rows);
+    } else {
+      console.log(err);
+    }
+  });  
+});
+
+// GET An usuario
 router.get('/usuarios/:id', (req, res) => {
   const { id } = req.params; 
   mysqlConnection.query('SELECT email, clave FROM usuario WHERE id = ?', [id], (err, rows, fields) => {
@@ -38,7 +91,7 @@ router.get('/usuarios/:id', (req, res) => {
   });
 });
 
-// DELETE An asientos
+// DELETE An usuario
 router.delete('/usuarios/:id', (req, res) => {
   const { id } = req.params;
   mysqlConnection.query('DELETE FROM usuario WHERE id = ?', [id], (err, rows, fields) => {
@@ -50,7 +103,7 @@ router.delete('/usuarios/:id', (req, res) => {
   });
 });
 
-// INSERT An asientos
+// INSERT An usuario
 router.post('/usuarios', (req, res) => {
   const {id, nombre, apellido, tipo_doc, num_doc, email, clave, rol} = req.body;
   console.log(id, nombre, apellido, tipo_doc, num_doc, email, clave, rol);
@@ -65,7 +118,7 @@ router.post('/usuarios', (req, res) => {
 
 });
 
-// Updated employee
+// Updated usuario
 router.put('/usuarios/:id', (req, res) => {
   const { nombre, apellido, tipo_doc, num_doc, email, clave, rol } = req.body;
   const { id } = req.params;

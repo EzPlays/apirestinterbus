@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors'); // importar los encabezados cors
 
-
 const app = express();
 
 
@@ -19,7 +18,15 @@ app.use(require('./routes/asientos'));
 app.use(require('./routes/buses'));
 app.use(require('./routes/usuarios'));
 
+
+app.get('/', (req, res) => {
+  res.json('interbus api');
+});
+
 // Starting the server
 app.listen(app.get('port'), () => {
   console.log(`Server on port ${app.get('port')}`);
 });
+
+
+
