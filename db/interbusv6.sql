@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-06-2022 a las 06:38:20
+-- Tiempo de generación: 12-07-2022 a las 18:55:54
 -- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 7.4.29
+-- Versión de PHP: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -206,8 +206,11 @@ CREATE TABLE `bus` (
 --
 
 INSERT INTO `bus` (`id`, `num_bus`, `placa`, `tipo_bus`) VALUES
-(1, 6735, 'RGRSG34', 'dos pisos'),
-(2, 3458, 'ASDO435', 'pequeño');
+(22, 76979, 'uuueee', 'gamer bv'),
+(23, 3646, 'BSIFUSB', 'veloz'),
+(24, 9686, 'EYHEHD', 'ostin'),
+(26, 9999, 'EEEEEEEO', 'mercury'),
+(27, 5467574, 'AAAEEEEUUUO', 'edit :v');
 
 -- --------------------------------------------------------
 
@@ -300,7 +303,13 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `tipo_doc`, `num_doc`, `email`, `clave`, `rol`) VALUES
-(1, 'emanuel', 'zapata', 'cc', 1062274311, 'emanuelzapata792@gmail.com', 'rgrgdrhdrh43363g', 'admin');
+(1, 'emanuel', 'zapata', 'cc', 1062274311, 'emanuelzapata792@gmail.com', 'rgrgdrhdrh43363g', 'admin'),
+(2, 'ez', 'drgrg', 'cc', 356363636, 'ez@gmail.com', 'regrdgdr', 'despachador'),
+(3, 'god', 'esgesg', 'cc', 54646353, 'aaaaaaa@gmail.com', 'drgbodurbg', 'despachador'),
+(4, 'camilo', 'sas', 'cc', 2147483647, 'camilo@gmail.com', 'cuniasftd', 'pasajero'),
+(5, 'conduc', 'thor', 'cc', 2147483647, 'conductor@gmail.com', 'conductoraaaaa', 'conductor'),
+(6, 'juan', 'caballo', 'cc', 2147483647, 'despsiuu@gmail.com', 'despgod', 'despachador'),
+(7, 'rodrigo', 'jefe', 'cc', 2147483647, 'jefeR@gmail.com', 'bossgod', 'jefe de rodamiento');
 
 -- --------------------------------------------------------
 
@@ -313,6 +322,15 @@ CREATE TABLE `usu_bus` (
   `usuario_id` int(11) DEFAULT NULL,
   `bus_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usu_bus`
+--
+
+INSERT INTO `usu_bus` (`id`, `usuario_id`, `bus_id`) VALUES
+(2, 4, 22),
+(3, 5, 24),
+(6, 6, 26);
 
 --
 -- Índices para tablas volcadas
@@ -390,7 +408,7 @@ ALTER TABLE `asiento`
 -- AUTO_INCREMENT de la tabla `bus`
 --
 ALTER TABLE `bus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `programacion`
@@ -420,13 +438,13 @@ ALTER TABLE `ruta`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `usu_bus`
 --
 ALTER TABLE `usu_bus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
