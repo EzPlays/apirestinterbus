@@ -17,7 +17,7 @@ app.use(cors());
 app.use(require('./routes/asientos'));
 app.use(require('./routes/buses'));
 app.use(require('./routes/usuarios'));
-
+app.use(require('./routes/usu_bus'));
 
 app.get('/', (req, res) => {
   res.json('interbus api');
