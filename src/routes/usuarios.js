@@ -1,3 +1,4 @@
+const { query } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -13,6 +14,43 @@ router.get('/usuarios', (req, res) => {
     }
   });
 });
+
+//login a user
+router.post('/usuarios/login', (req, res) => {
+  const { email, clave } = req.body;
+  const query = `SELECT * FROM usuario WHERE email = ? and clave = ?`
+  mysqlConnection.query(query, [email, clave], (err, rows, fields) => {
+    if (!err) {
+      if (!email) {
+        res.status(403)
+        res.send({ message: 'Invalid email' })
+      } else if (!clave) {
+        res.status(403)
+        res.send({ message: 'Invalid clave' })
+      } else {
+        res.json(rows);
+      }
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+//login 2
+router.post('/login', (req, res) => {
+  const email = req.body.email;
+  const clave = req.body.clave;
+  if(email && clave) {
+    mysqlConnection.query('SELECT * FROM usuario WHERE email = ? and clave = ?', [email, clave], (err, result) => {
+      if(result.length == 0){
+        res.send({ message: 'email y/o clave incorrecta' });
+      } else {
+        // res.send({ message: 'login correct' });
+        res.json(result);
+      }
+    })
+  }
+})
 
 // Get user rol despachador
 router.get('/usuarios/desp', (req, res) => {
