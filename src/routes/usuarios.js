@@ -19,21 +19,20 @@ router.get('/usuarios', (req, res) => {
 router.post('/usuarios/login', (req, res) => {
   const { email, clave } = req.body;
   const query = `SELECT * FROM usuario WHERE email = ? and clave = ?`
-  mysqlConnection.query(query, [email, clave], (err, rows, fields) => {
-    if (!err) {
-      if (!email) {
-        res.status(403)
-        res.send({ message: 'Invalid email' })
-      } else if (!clave) {
-        res.status(403)
-        res.send({ message: 'Invalid clave' })
+  if (email && clave) {
+    mysqlConnection.query(query, [email, clave], (err, rows, fields) => {
+      if (!err) {
+        if (rows == 0) {
+          res.status(403)
+          res.send({ message: 'Invalid email y/o clave' })
+        } else {
+          res.json(rows);
+        }
       } else {
-        res.json(rows);
+        console.log(err);
       }
-    } else {
-      console.log(err);
-    }
-  });
+    });
+  }
 });
 
 //login 2
@@ -43,6 +42,7 @@ router.post('/login', (req, res) => {
   if(email && clave) {
     mysqlConnection.query('SELECT * FROM usuario WHERE email = ? and clave = ?', [email, clave], (err, result) => {
       if(result.length == 0){
+        res.status(403)
         res.send({ message: 'email y/o clave incorrecta' });
       } else {
         // res.send({ message: 'login correct' });
