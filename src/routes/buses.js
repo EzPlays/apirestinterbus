@@ -3,7 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../database.js');
 
-// GET all asientos
+// GET all buses
 router.get('/buses', (req, res) => {
   mysqlConnection.query('SELECT * FROM bus', (err, rows, fields) => {
     if (!err) {
@@ -14,7 +14,7 @@ router.get('/buses', (req, res) => {
   });
 });
 
-// GET An asientos
+// GET An buses
 router.get('/buses/:id', (req, res) => {
   const { id } = req.params;
   mysqlConnection.query('SELECT * FROM bus WHERE id = ?', [id], (err, rows, fields) => {
@@ -26,7 +26,7 @@ router.get('/buses/:id', (req, res) => {
   });
 });
 
-// DELETE An asientos
+// DELETE An buses
 router.delete('/buses/:id', (req, res) => {
   const { id } = req.params;
   mysqlConnection.query('DELETE FROM bus WHERE id = ?', [id], (err, rows, fields) => {
@@ -38,7 +38,7 @@ router.delete('/buses/:id', (req, res) => {
   });
 });
 
-// INSERT An asientos
+// INSERT An buses
 router.post('/buses', (req, res) => {
   const { id, num_bus, placa, tipo_bus } = req.body;
   console.log(id, num_bus, placa, tipo_bus);
@@ -53,7 +53,7 @@ router.post('/buses', (req, res) => {
 
 });
 
-// Updated asientos
+// Updated buses
 router.put('/buses/:id', (req, res) => {
   const { num_bus, placa, tipo_bus } = req.body;
   const { id } = req.params;

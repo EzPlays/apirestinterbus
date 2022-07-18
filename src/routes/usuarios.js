@@ -39,6 +39,9 @@ router.post('/usuarios/login', (req, res) => {
 router.post('/login', (req, res) => {
   const email = req.body.email;
   const clave = req.body.clave;
+  desp = "despachador"
+  conduc = "conductor"
+  rol = desp || conduc
   if(email && clave) {
     mysqlConnection.query('SELECT * FROM usuario WHERE email = ? and clave = ?', [email, clave], (err, result) => {
       if(result.length == 0){
