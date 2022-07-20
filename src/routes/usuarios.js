@@ -5,6 +5,48 @@ const router = express.Router();
 const mysqlConnection = require('../database.js');
 
 // GET all usuarios
+// tipo_doc, num_doc, email, clave, rol
+/**
+ * @swagger
+ * components: 
+ *  schemas: 
+ *    Users:
+ *      type: object
+ *      properties: 
+ *        id:
+ *          type: integer
+ *          description: id del usuario
+ *        nombre:
+ *          type: string
+ *          description: nombre del usuario
+ *        apellido:
+ *          type: string
+ *          description: apellido del usuario
+ *        tipo_doc:
+ *          type: string
+ *          description: tipo de documento del usuario
+ *        num_doc:
+ *          type: integer
+ *          description: numero de documento del usuario
+ *      required:
+ *         - nombre
+ *         - apellido
+ *        
+ */      
+/**
+ * @swagger
+ * /usuarios:
+ *  get:
+ *    summary: obtiene todos los usuarios
+ *    responses:
+ *      200: 
+ *        description: lista de usuarios
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              
+ */
 router.get('/usuarios', (req, res) => {
   mysqlConnection.query('SELECT * FROM usuario', (err, rows, fields) => {
     if (!err) {
@@ -15,7 +57,7 @@ router.get('/usuarios', (req, res) => {
   });
 });
 
-//login a user
+//login a user web
 router.post('/usuarios/login', (req, res) => {
   const { email, clave } = req.body;
   const query = `SELECT * FROM usuario WHERE email = ? and clave = ?`
@@ -35,15 +77,14 @@ router.post('/usuarios/login', (req, res) => {
   }
 });
 
-//login 2
+/*login 2 consumo andriod*/
 router.post('/login', (req, res) => {
   const email = req.body.email;
   const clave = req.body.clave;
-  desp = "despachador"
-  conduc = "conductor"
-  rol = desp || conduc
-  if(email && clave) {
-    mysqlConnection.query('SELECT * FROM usuario WHERE email = ? and clave = ?', [email, clave], (err, result) => {
+  arrayroles = ["despachador", "conductor", "admin"]
+  rol = arrayroles[0 || 1, 2]
+  if(email && clave && rol) {
+    mysqlConnection.query('SELECT * FROM usuario WHERE email = ? and clave = ? and rol = ?', [email, clave, rol], (err, result) => {
       if(result.length == 0){
         res.status(403)
         res.send({ message: 'email y/o clave incorrecta' });
