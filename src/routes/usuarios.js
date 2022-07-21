@@ -8,11 +8,11 @@ const mysqlConnection = require('../database.js');
 // tipo_doc, num_doc, email, clave, rol
 /**
  * @swagger
- * components: 
- *  schemas: 
+ * components:
+ *  schemas:
  *    Users:
  *      type: object
- *      properties: 
+ *      properties:
  *        id:
  *          type: integer
  *          description: id del usuario
@@ -82,7 +82,10 @@ router.post('/login', (req, res) => {
   const email = req.body.email;
   const clave = req.body.clave;
   arrayroles = ["despachador", "conductor", "admin"]
-  rol = arrayroles[0 || 1, 2]
+  for(var i=0; i<arrayroles.length; i++){
+    rol = arrayroles[i]
+    console.log(rol);
+  }
   if(email && clave && rol) {
     mysqlConnection.query('SELECT * FROM usuario WHERE email = ? and clave = ? and rol = ?', [email, clave, rol], (err, result) => {
       if(result.length == 0){
@@ -164,7 +167,7 @@ router.get('/usuarios/admin', (req, res) => {
 // GET An usuario
 router.get('/usuarios/:id', (req, res) => {
   const { id } = req.params;
-  mysqlConnection.query('SELECT email, clave FROM usuario WHERE id = ?', [id], (err, rows, fields) => {
+  mysqlConnection.query('SELECT email, clave, rol FROM usuario WHERE id = ?', [id], (err, rows, fields) => {
     if (!err) {
       res.json(rows[0]);
     } else {

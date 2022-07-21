@@ -14,7 +14,7 @@ const swaggerSpec = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:5000",
       }
     ]
   },
@@ -25,7 +25,7 @@ const app = express();
 
 
 // Settings
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 
 // Middlewares
 app.use(express.json());
