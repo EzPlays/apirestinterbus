@@ -40,10 +40,10 @@ router.delete('/programaciones/:id', (req, res) => {
 
 // INSERT An programaciones
 router.post('/programaciones', (req, res) => {
-  const { id, fecha, hora, usuario_id, ruta_id } = req.body;
-  console.log(id, fecha, hora, usuario_id, ruta_id);
-  const query = `CALL programacionAddOrEdit(?, ?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, fecha, hora, usuario_id, ruta_id], (err, rows, fields) => {
+  const {fecha, hora, usuario_id, ruta_id } = req.body;
+  console.log(fecha, hora, usuario_id, ruta_id);
+  const query = "INSERT INTO programacion (fecha, hora, usuario_id, ruta_id) VALUES (?, ?, ?, ?)";
+  mysqlConnection.query(query, [fecha, hora, usuario_id, ruta_id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'Programacion guardada' });
     } else {
@@ -57,8 +57,8 @@ router.post('/programaciones', (req, res) => {
 router.put('/programaciones/:id', (req, res) => {
   const { fecha, hora, usuario_id, ruta_id } = req.body;
   const { id } = req.params;
-  const query = `CALL programacionAddOrEdit(?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, fecha, hora, usuario_id, ruta_id], (err, rows, fields) => {
+  const query = "UPDATE programacion SET fecha = ?, hora = ?, usuario_id = ?, ruta_id = ? WHERE id = ?";
+  mysqlConnection.query(query, [fecha, hora, usuario_id, ruta_id, id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'Programacion actualizada' });
     } else {

@@ -40,10 +40,10 @@ router.delete('/rutas/:id', (req, res) => {
 
 // INSERT An ruta
 router.post('/rutas', (req, res) => {
-  const { id, lugares } = req.body;
-  console.log(id, lugares);
-  const query = `CALL rutaAddOrEdit(?, ?)`;
-  mysqlConnection.query(query, [id, lugares], (err, rows, fields) => {
+  const {lugares } = req.body;
+  console.log(lugares);
+  const query = "INSERT INTO ruta (lugares) VALUES (?)";
+  mysqlConnection.query(query, [lugares], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'ruta guardada' });
     } else {
@@ -56,8 +56,8 @@ router.post('/rutas', (req, res) => {
 router.put('/rutas/:id', (req, res) => {
   const { lugares } = req.body;
   const { id } = req.params;
-  const query = `CALL rutaAddOrEdit(?, ?)`;
-  mysqlConnection.query(query, [id, lugares], (err, rows, fields) => {
+  const query = "UPDATE asiento SET lugares = ? WHERE id = ?";
+  mysqlConnection.query(query, [lugares, id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'Ruta actualizada' });
     } else {

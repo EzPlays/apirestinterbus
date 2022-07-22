@@ -40,10 +40,10 @@ router.delete('/usu_bus/:id', (req, res) => {
 
 // INSERT An usu_bus
 router.post('/usu_bus', (req, res) => {
-    const { id, usuario_id, bus_id } = req.body;
-    console.log(id, usuario_id, bus_id);
-    const query = `CALL usu_busAddOrEdit(?, ?, ?)`;
-    mysqlConnection.query(query, [id, usuario_id, bus_id], (err, rows, fields) => {
+    const {usuario_id, bus_id } = req.body;
+    console.log(usuario_id, bus_id);
+    const query = "INSERT INTO ruta (usuario_id, bus_id) VALUES (?, ?)";
+    mysqlConnection.query(query, [usuario_id, bus_id], (err, rows, fields) => {
         try {
             if (!err) {
                 res.json({ status: 'usu_bus guardado' });
@@ -62,8 +62,8 @@ router.post('/usu_bus', (req, res) => {
 router.put('/usu_bus/:id', (req, res) => {
     const { usuario_id, bus_id } = req.body;
     const { id } = req.params;
-    const query = `CALL usu_busAddOrEdit(?, ?, ?)`;
-    mysqlConnection.query(query, [id, usuario_id, bus_id], (err, rows, fields) => {
+    const query = "UPDATE asiento SET usuario_id = ?, bus_id = ? WHERE id = ?";
+    mysqlConnection.query(query, [usuario_id, bus_id, id], (err, rows, fields) => {
         try {
             if (!err) {
                 res.json({ status: 'usu_bus actualizado' });

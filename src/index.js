@@ -14,7 +14,7 @@ const swaggerSpec = {
     },
     servers: [
       {
-        url: "http://localhost:5000",
+        url: "http://localhost:3000",
       }
     ]
   },
@@ -23,9 +23,8 @@ const swaggerSpec = {
 
 const app = express();
 
-
 // Settings
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 3000);
 
 // Middlewares
 app.use(express.json());
@@ -34,13 +33,11 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerSpec)))
 
-// Routes ez
+// Routes
 app.use(require('./routes/asientos'));
 app.use(require('./routes/buses'));
 app.use(require('./routes/usuarios'));
 app.use(require('./routes/usu_bus'));
-
-// Routes niber
 app.use(require('./routes/rutas'));
 app.use(require('./routes/programaciones'));
 app.use(require('./routes/programacion_bus'));
@@ -52,7 +49,7 @@ app.get('/', (req, res) => {
 
 // Starting the server
 app.listen(app.get('port'), () => {
-  console.log(`Server on port ${app.get('port')}`);
+  console.log(`Server on port http://localhost:${app.get('port')}`);
 });
 
 

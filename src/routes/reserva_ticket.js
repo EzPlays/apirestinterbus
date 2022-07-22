@@ -40,10 +40,10 @@ router.delete('/reserva_tickets/:id', (req, res) => {
 
 // INSERT An reserva_ticket
 router.post('/reserva_tickets', (req, res) => {
-  const { id, valor_uni, total, programacion_id, usuario_id } = req.body;
+  const { valor_uni, total, programacion_id, usuario_id } = req.body;
   console.log(id, valor_uni, total, programacion_id, usuario_id);
-  const query = `CALL reserva_ticketAddOrEdit(?, ?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, valor_uni, total, programacion_id, usuario_id], (err, rows, fields) => {
+  const query = "INSERT INTO reserva_ticket (valor_uni, total, programacion_id, usuario_id) VALUES (?, ?, ?, ?)";
+  mysqlConnection.query(query, [valor_uni, total, programacion_id, usuario_id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'Reserva guardada' });
     } else {
@@ -57,8 +57,8 @@ router.post('/reserva_tickets', (req, res) => {
 router.put('/reserva_tickets/:id', (req, res) => {
   const { valor_uni, total, programacion_id, usuario_id } = req.body;
   const { id } = req.params;
-  const query = `CALL reserva_ticketAddOrEdit(?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, valor_uni, total, programacion_id, usuario_id], (err, rows, fields) => {
+  const query = "UPDATE reserva_ticket SET valor_uni = ?, total = ?, programacion_id = ?, usuario_id = ? WHERE id = ?";
+  mysqlConnection.query(query, [valor_uni, total, programacion_id, usuario_id, id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'Reserva actualizada' });
     } else {

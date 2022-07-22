@@ -18,10 +18,10 @@ router.get('/buses', (req, res) => {
 router.get('/buses/:id', (req, res) => {
   const { id } = req.params;
   mysqlConnection.query('SELECT * FROM bus WHERE id = ?', [id], (err, rows, fields) => {
-    if (!err) {
-      res.json(rows[0]);
+    if (rows.length == 0) {
+      res.status(404).json('el bus no existe');
     } else {
-      console.log(err);
+      res.status(200).json(rows[0]);
     }
   });
 });
@@ -40,10 +40,10 @@ router.delete('/buses/:id', (req, res) => {
 
 // INSERT An buses
 router.post('/buses', (req, res) => {
-  const { id, num_bus, placa, tipo_bus } = req.body;
-  console.log(id, num_bus, placa, tipo_bus);
-  const query = `CALL busAddOrEdit(?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, num_bus, placa, tipo_bus], (err, rows, fields) => {
+  const { num_bus, placa, tipo_bus } = req.body;
+  console.log(num_bus, placa, tipo_bus);
+  const query = "INSERT INTO bus (num_bus, placa, tipo_bus) VALUES (?, ?, ?)";
+  mysqlConnection.query(query, [num_bus, placa, tipo_bus], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'bus guardado' });
     } else {
@@ -57,8 +57,8 @@ router.post('/buses', (req, res) => {
 router.put('/buses/:id', (req, res) => {
   const { num_bus, placa, tipo_bus } = req.body;
   const { id } = req.params;
-  const query = `CALL busAddOrEdit(?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, num_bus, placa, tipo_bus], (err, rows, fields) => {
+  const query = "UPDATE bus SET num_bus = ?, placa = ?, tipo_bus = ? WHERE id = ?";
+  mysqlConnection.query(query, [num_bus, placa, tipo_bus, id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'bus actualizado' });
     } else {

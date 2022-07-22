@@ -18,10 +18,10 @@ router.get('/asientos', (req, res) => {
 router.get('/asientos/:id', (req, res) => {
   const { id } = req.params;
   mysqlConnection.query('SELECT * FROM asiento WHERE id = ?', [id], (err, rows, fields) => {
-    if (!err) {
-      res.json(rows[0]);
+    if (rows.length == 0) {
+      res.status(404).json('el asiento no existe');
     } else {
-      console.log(err);
+      res.status(200).json(rows[0]);
     }
   });
 });
@@ -40,10 +40,10 @@ router.delete('/asientos/:id', (req, res) => {
 
 // INSERT An asientos
 router.post('/asientos', (req, res) => {
-  const { id, estado, num_asiento, bus_id, reserva_id } = req.body;
-  console.log(id, estado, num_asiento, bus_id, reserva_id);
-  const query = `CALL asientoAddOrEdit(?, ?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, estado, num_asiento, bus_id, reserva_id], (err, rows, fields) => {
+  const { estado, num_asiento, bus_id, reserva_id } = req.body;
+  console.log(estado, num_asiento, bus_id, reserva_id);
+  const query = "INSERT INTO asiento (estado, num_asiento, bus_id, reserva_id) VALUES (?, ?, ?, ?)";
+  mysqlConnection.query(query, [estado, num_asiento, bus_id, reserva_id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'asiento guardado' });
     } else {
@@ -57,8 +57,8 @@ router.post('/asientos', (req, res) => {
 router.put('/asientos/:id', (req, res) => {
   const { estado, num_asiento, bus_id, reserva_id } = req.body;
   const { id } = req.params;
-  const query = `CALL asientoAddOrEdit(?, ?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, estado, num_asiento, bus_id, reserva_id], (err, rows, fields) => {
+  const query = "UPDATE asiento SET estado = ?, num_asiento = ?, bus_id = ?, reserva_id = ? WHERE id = ?";
+  mysqlConnection.query(query, [estado, num_asiento, bus_id, reserva_id, id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'asiento actualizado' });
     } else {

@@ -45,7 +45,6 @@ const mysqlConnection = require('../database.js');
  *          type: string
  *          description: rol del usuario
  *      required:
- *         - id
  *         - nombre
  *         - apellido
  *         - tipo_doc
@@ -70,7 +69,6 @@ const mysqlConnection = require('../database.js');
  *  schemas:
  *    UsuarioInsert:
  *      example:
- *          id: 0
  *          nombre: prueba2
  *          apellido: pba
  *          tipo_doc: cc
@@ -80,7 +78,6 @@ const mysqlConnection = require('../database.js');
  *          rol: conductor 
  *    UsuarioEdit:
  *      example:
- *          id: 3
  *          nombre: edit
  *          apellido: editado
  *          tipo_doc: cc
@@ -289,12 +286,6 @@ router.get('/usuarios/:id', (req, res) => {
  *    responses:
  *      200:
  *        description: usuario eliminado
- *        content: 
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Usuario'
- *      404:
- *        description: usuario no eliminado
  */
 router.delete('/usuarios/:id', (req, res) => {
   const { id } = req.params;
@@ -323,18 +314,12 @@ router.delete('/usuarios/:id', (req, res) => {
  *    responses:
  *      200:
  *        description: usuario guardado
- *        content: 
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/UsuarioInsert'
- *      404:
- *        description: usuario no guardado   
  */
 router.post('/usuarios', (req, res) => {
-  const { id, nombre, apellido, tipo_doc, num_doc, email, clave, rol } = req.body;
-  console.log(id, nombre, apellido, tipo_doc, num_doc, email, clave, rol);
-  const query = `CALL usuarioAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, nombre, apellido, tipo_doc, num_doc, email, clave, rol], (err, rows, fields) => {
+  const {nombre, apellido, tipo_doc, num_doc, email, clave, rol } = req.body;
+  console.log(nombre, apellido, tipo_doc, num_doc, email, clave, rol);
+  const query = "INSERT INTO usuario (nombre, apellido, tipo_doc, num_doc, email, clave, rol) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  mysqlConnection.query(query, [nombre, apellido, tipo_doc, num_doc, email, clave, rol], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'usuario guardado' });
     } else {
@@ -362,18 +347,12 @@ router.post('/usuarios', (req, res) => {
  *    responses:
  *      200:
  *        description: usuario actualizado
- *        content: 
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/UsuarioEdit'
- *      404:
- *        description: usuario no actualizado
  */
 router.put('/usuarios/:id', (req, res) => {
   const { nombre, apellido, tipo_doc, num_doc, email, clave, rol } = req.body;
   const { id } = req.params;
-  const query = `CALL usuarioAddOrEdit(?, ?, ?, ?, ?, ?, ?, ?)`;
-  mysqlConnection.query(query, [id, nombre, apellido, tipo_doc, num_doc, email, clave, rol], (err, rows, fields) => {
+  const query = "UPDATE usuario SET nombre = ?, apellido = ?, tipo_doc = ?, num_doc = ?, email = ?, clave = ?, rol = ?  WHERE id = ?";
+  mysqlConnection.query(query, [nombre, apellido, tipo_doc, num_doc, email, clave, rol, id], (err, rows, fields) => {
     if (!err) {
       res.json({ status: 'usuario actualizado' });
     } else {
