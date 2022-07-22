@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-07-2022 a las 18:55:54
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.0.19
+-- Tiempo de generación: 21-07-2022 a las 20:22:51
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `asientoAddOrEdit` (IN `_id` INT, IN `_estado` VARCHAR(40), IN `_num_asiento` INT(11), IN `_bus_id` INT(11), IN `_reserva_id` INT(11))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `asientoAddOrEdit` (IN `_id` INT, IN `_estado` VARCHAR(40), IN `_num_asiento` INT(11), IN `_bus_id` INT(11), IN `_reserva_id` INT(11))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO asiento (estado, num_asiento, bus_id, reserva_id)
     VALUES (_estado, _num_asiento, _bus_id, _reserva_id);
@@ -44,7 +44,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `asientoAddOrEdit` (IN `_id` INT, IN
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `busAddOrEdit` (IN `_id` INT, IN `_num_bus` INT(11), IN `_placa` VARCHAR(100), IN `_tipo_bus` VARCHAR(100))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `busAddOrEdit` (IN `_id` INT, IN `_num_bus` INT(11), IN `_placa` VARCHAR(100), IN `_tipo_bus` VARCHAR(100))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO bus (num_bus, placa, tipo_bus)
     VALUES (_num_bus, _placa, _tipo_bus);
@@ -62,7 +62,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `busAddOrEdit` (IN `_id` INT, IN `_n
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `programacionAddOrEdit` (IN `_id` INT, IN `_fecha` DATE, IN `_hora` TIME, IN `_usuario_id` INT(11), IN `_ruta_id` INT(11))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `programacionAddOrEdit` (IN `_id` INT, IN `_fecha` DATE, IN `_hora` TIME, IN `_usuario_id` INT(11), IN `_ruta_id` INT(11))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO programacion (fecha, hora, usuario_id, ruta_id)
     VALUES (_fecha, _hora, _usuario_id, _ruta_id);
@@ -81,7 +81,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `programacionAddOrEdit` (IN `_id` IN
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `programacion_busAddOrEdit` (IN `_id` INT, IN `_programacion_id` INT(11), IN `_bus_id` INT(11))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `programacion_busAddOrEdit` (IN `_id` INT, IN `_programacion_id` INT(11), IN `_bus_id` INT(11))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO programacion_bus (programacion_id, bus_id)
     VALUES (_programacion_id, _bus_id);
@@ -98,7 +98,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `programacion_busAddOrEdit` (IN `_id
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reserva_ticketAddOrEdit` (IN `_id` INT, IN `_valor_uni` DOUBLE, IN `_total` DOUBLE, IN `_programacion_id` INT(11), IN `_usuario_id` INT(11))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reserva_ticketAddOrEdit` (IN `_id` INT, IN `_valor_uni` DOUBLE, IN `_total` DOUBLE, IN `_programacion_id` INT(11), IN `_usuario_id` INT(11))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO reserva_ticket (valor_uni, total, programacion_id, usuario_id)
     VALUES (_valor_uni, _total, _programacion_id, _usuario_id);
@@ -117,7 +117,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `reserva_ticketAddOrEdit` (IN `_id` 
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `rutaAddOrEdit` (IN `_id` INT, IN `_lugares` VARCHAR(40))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `rutaAddOrEdit` (IN `_id` INT, IN `_lugares` VARCHAR(40))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO ruta (lugares)
     VALUES (_lugares);
@@ -133,7 +133,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `rutaAddOrEdit` (IN `_id` INT, IN `_
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(40), IN `_apellido` VARCHAR(40), IN `_tipo_doc` VARCHAR(40), IN `_num_doc` INT(40), IN `_email` VARCHAR(40), IN `_clave` VARCHAR(40), IN `_rol` VARCHAR(40))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioAddOrEdit` (IN `_id` INT, IN `_nombre` VARCHAR(40), IN `_apellido` VARCHAR(40), IN `_tipo_doc` VARCHAR(40), IN `_num_doc` INT(40), IN `_email` VARCHAR(40), IN `_clave` VARCHAR(40), IN `_rol` VARCHAR(40))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO usuario (nombre, apellido, tipo_doc, num_doc, email, clave, rol)
     VALUES (_nombre, _apellido, _tipo_doc, _num_doc, _email, _clave, _rol);
@@ -155,7 +155,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioAddOrEdit` (IN `_id` INT, IN
   SELECT _id AS 'id';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usu_busAddOrEdit` (IN `_id` INT, IN `_usuario_id` INT(11), IN `_bus_id` INT(11))   BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usu_busAddOrEdit` (IN `_id` INT, IN `_usuario_id` INT(11), IN `_bus_id` INT(11))  BEGIN 
   IF _id = 0 THEN
     INSERT INTO usu_bus (usuario_id, bus_id)
     VALUES (_usuario_id, _bus_id);
@@ -303,11 +303,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `tipo_doc`, `num_doc`, `email`, `clave`, `rol`) VALUES
-(1, 'emanuel', 'zapata', 'cc', 1062274311, 'emanuelzapata792@gmail.com', 'rgrgdrhdrh43363g', 'admin'),
-(2, 'ez', 'drgrg', 'cc', 356363636, 'ez@gmail.com', 'regrdgdr', 'despachador'),
-(3, 'god', 'esgesg', 'cc', 54646353, 'aaaaaaa@gmail.com', 'drgbodurbg', 'despachador'),
-(4, 'camilo', 'sas', 'cc', 2147483647, 'camilo@gmail.com', 'cuniasftd', 'pasajero'),
-(5, 'conduc', 'thor', 'cc', 2147483647, 'conductor@gmail.com', 'conductoraaaaa', 'conductor'),
+(1, 'emanuel', 'zapata', 'cc', 1062274311, 'emanuelzapata792@gmail.com', 'adminz', 'admin'),
+(2, 'ez', 'drgrg', 'cc', 356363636, 'ez@gmail.com', 'ezdesp', 'despachador'),
+(3, 'god', 'esgesg', 'cc', 54646353, 'aaaaaaa@gmail.com', 'aae', 'despachador'),
+(4, 'camilo', 'sas', 'cc', 2147483647, 'camilo@gmail.com', 'pasa', 'pasajero'),
+(5, 'conduc', 'thor', 'cc', 2147483647, 'conductor@gmail.com', 'conduc', 'conductor'),
 (6, 'juan', 'caballo', 'cc', 2147483647, 'despsiuu@gmail.com', 'despgod', 'despachador'),
 (7, 'rodrigo', 'jefe', 'cc', 2147483647, 'jefeR@gmail.com', 'bossgod', 'jefe de rodamiento');
 
