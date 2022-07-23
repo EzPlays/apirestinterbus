@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `asiento`
 --
+CREATE DATABASE interbusv6;
+
+USE DATABASE interbusv6;
 
 CREATE TABLE `asiento` (
   `id` int(11) NOT NULL,
