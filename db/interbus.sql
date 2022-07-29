@@ -26,9 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `asiento`
 --
-CREATE DATABASE interbusv6;
-
-USE DATABASE interbusv6;
 
 CREATE TABLE `asiento` (
   `id` int(11) NOT NULL,
@@ -56,11 +53,11 @@ CREATE TABLE `bus` (
 --
 
 INSERT INTO `bus` (`id`, `num_bus`, `placa`, `tipo_bus`) VALUES
-(24, 9686, 'EYHEHD', 'ostin'),
-(26, 9999, 'EEEEEEEO', 'mercury'),
-(27, 5467574, 'AAAEEEEUUUO', 'edit :v'),
-(28, 8970, 'ctucu', 'grande'),
-(29, 8888, 'UUDTHD', 'god nuevo');
+(1, 9686, 'EYHEHD', 'ostin'),
+(2, 9999, 'EEEEEEEO', 'mercury'),
+(3, 5467574, 'AAAEEEEUUUO', 'edit :v'),
+(4, 8970, 'ctucu', 'grande'),
+(5, 8888, 'UUDTHD', 'god nuevo');
 
 -- --------------------------------------------------------
 
@@ -161,7 +158,7 @@ INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `tipo_doc`, `num_doc`, `email
 (6, 'juan', 'caballo', 'cc', 2147483647, 'despsiuu@gmail.com', 'despgod', 'despachador'),
 (7, 'rodrigo', 'jefe', 'cc', 2147483647, 'jefeR@gmail.com', 'bossgod', 'jefe de rodamiento'),
 (8, 'prueba', 'ci', 'cc', 464745454, 'pru@gmail.com', 'pruebaci', 'pasajero'),
-(14, 'edit', 'editado', 'cc', 2147483647, 'exampleEdit@gmail.com', 'editpass', 'admin');
+(9, 'edit', 'editado', 'cc', 2147483647, 'exampleEdit@gmail.com', 'editpass', 'admin');
 
 -- --------------------------------------------------------
 
@@ -179,9 +176,6 @@ CREATE TABLE `usu_bus` (
 -- Volcado de datos para la tabla `usu_bus`
 --
 
-INSERT INTO `usu_bus` (`id`, `usuario_id`, `bus_id`) VALUES
-(3, 5, 24),
-(6, 6, 26);
 
 --
 -- Índices para tablas volcadas
@@ -259,7 +253,7 @@ ALTER TABLE `asiento`
 -- AUTO_INCREMENT de la tabla `bus`
 --
 ALTER TABLE `bus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `programacion`
@@ -277,7 +271,7 @@ ALTER TABLE `programacion_bus`
 -- AUTO_INCREMENT de la tabla `reserva_ticket`
 --
 ALTER TABLE `reserva_ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ruta`
@@ -289,13 +283,13 @@ ALTER TABLE `ruta`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `usu_bus`
 --
 ALTER TABLE `usu_bus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
