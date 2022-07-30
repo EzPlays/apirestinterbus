@@ -4,7 +4,44 @@ const router = express.Router();
 
 const mysqlConnection = require('../database.js');
 
-// GET all usuarios
+//tags
+/**
+ * @swagger
+ * tags: 
+ *  name: Usuarios
+ *  description: Rutas de Usuario
+ */
+
+//componentes
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    UsuarioInsert:
+ *      example:
+ *          nombre: prueba2
+ *          apellido: pba
+ *          tipo_doc: cc
+ *          num_doc: 4353663554
+ *          email: example2@gmail.com
+ *          clave: pass1234
+ *          rol: conductor 
+ *    UsuarioEdit:
+ *      example:
+ *          nombre: edit
+ *          apellido: editado
+ *          tipo_doc: cc
+ *          num_doc: 6474664543
+ *          email: exampleEdit@gmail.com
+ *          clave: editpass
+ *          rol: admin
+ *    Login:
+ *      example:
+ *          email: exampleEdit@gmail.com
+ *          clave: editpass
+ */
+
+//parametros y schema
 /**
  * @swagger
  * components:
@@ -61,39 +98,9 @@ const mysqlConnection = require('../database.js');
  *          email: example@gmail.com
  *          clave: contraseña123
  *          rol: despachador   
- */    
-
-/**
- * @swagger
- * components:
- *  schemas:
- *    UsuarioInsert:
- *      example:
- *          nombre: prueba2
- *          apellido: pba
- *          tipo_doc: cc
- *          num_doc: 4353663554
- *          email: example2@gmail.com
- *          clave: pass1234
- *          rol: conductor 
- *    UsuarioEdit:
- *      example:
- *          nombre: edit
- *          apellido: editado
- *          tipo_doc: cc
- *          num_doc: 6474664543
- *          email: exampleEdit@gmail.com
- *          clave: editpass
- *          rol: admin 
- */ 
-
-/**
- * @swagger
- * tags: 
- *  name: Usuarios
- *  description: Rutas de Usuario
  */
 
+// GET all usuarios
 /**
  * @swagger
  * /usuarios:
@@ -121,6 +128,24 @@ router.get('/usuarios', (req, res) => {
 });
 
 //login a user web
+/**
+ * @swagger
+ * /usuarios/login:
+ *  post:
+ *    summary: login
+ *    tags: [Usuarios]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Login'
+ *    responses:
+ *      200:
+ *        description: login correct
+ *      403:
+ *        description: Invalid email y/o clave
+ */
 router.post('/usuarios/login', (req, res) => {
   const { email, clave } = req.body;
   const query = `SELECT * FROM usuario WHERE email = ? and clave = ?`
@@ -131,7 +156,8 @@ router.post('/usuarios/login', (req, res) => {
           res.status(403)
           res.send({ message: 'Invalid email y/o clave' })
         } else {
-          res.json(rows);
+          res.send({ message: 'login correct' });
+          // res.json(rows);
         }
       } else {
         console.log(err);
@@ -144,9 +170,9 @@ router.post('/usuarios/login', (req, res) => {
 router.post('/login', (req, res) => {
   const email = req.body.email;
   const clave = req.body.clave;
-  if(email && clave) {
+  if (email && clave) {
     mysqlConnection.query('SELECT rol, email, clave FROM usuario WHERE email = ? and clave = ?', [email, clave], (err, result) => {
-      if(result.length == 0){
+      if (result.length == 0) {
         res.status(403)
         res.send({ message: 'email y/o clave incorrecta' });
       } else {
@@ -166,13 +192,13 @@ router.post('/login', (req, res) => {
  *    tags: [Usuarios]
  *    responses:
  *      200: 
- *        description: lista de usuarios
+ *        description: lista de despachadores
  *        content:
  *          application/json:
  *            schema:
  *              type: array
  *              items: 
- *                $ref: '#/components/schemas/Usuario'            
+ *                $ref: '#/components/schemas/Usuario'
  */
 router.get('/usuarios/desp', (req, res) => {
   // const {id, email, clave, rol} = req.body;
@@ -187,6 +213,22 @@ router.get('/usuarios/desp', (req, res) => {
 });
 
 // Get user rol conductor
+/**
+ * @swagger
+ * /usuarios/conduc:
+ *  get:
+ *    summary: obtiene todos los conductores
+ *    tags: [Usuarios]
+ *    responses:
+ *      200: 
+ *        description: lista de conductores
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items: 
+ *                $ref: '#/components/schemas/Usuario'
+ */
 router.get('/usuarios/conduc', (req, res) => {
   // const {id, email, clave, rol} = req.body;
   rol = "conductor"
@@ -200,6 +242,22 @@ router.get('/usuarios/conduc', (req, res) => {
 });
 
 // Get user rol pasajero
+/**
+ * @swagger
+ * /usuarios/pasa:
+ *  get:
+ *    summary: obtiene todos los pasajeros
+ *    tags: [Usuarios]
+ *    responses:
+ *      200: 
+ *        description: lista de pasajeros
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items: 
+ *                $ref: '#/components/schemas/Usuario'
+ */
 router.get('/usuarios/pasa', (req, res) => {
   // const {id, email, clave, rol} = req.body;
   rol = "pasajero"
@@ -213,6 +271,22 @@ router.get('/usuarios/pasa', (req, res) => {
 });
 
 // Get user rol jefe de rodamiento
+/**
+ * @swagger
+ * /usuarios/jefe:
+ *  get:
+ *    summary: obtiene todos los jefes de rodamiento
+ *    tags: [Usuarios]
+ *    responses:
+ *      200: 
+ *        description: lista de jefes de rodamiento
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items: 
+ *                $ref: '#/components/schemas/Usuario'
+ */
 router.get('/usuarios/jefe', (req, res) => {
   // const {id, email, clave, rol} = req.body;
   rol = "jefe de rodamiento"
@@ -226,6 +300,22 @@ router.get('/usuarios/jefe', (req, res) => {
 });
 
 // Get user rol admin
+/**
+ * @swagger
+ * /usuarios/admin:
+ *  get:
+ *    summary: obtiene todos los administradores
+ *    tags: [Usuarios]
+ *    responses:
+ *      200: 
+ *        description: lista de administradores
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items: 
+ *                $ref: '#/components/schemas/Usuario'
+ */
 router.get('/usuarios/admin', (req, res) => {
   // const {id, email, clave, rol} = req.body;
   rol = "admin"
@@ -316,7 +406,7 @@ router.delete('/usuarios/:id', (req, res) => {
  *        description: usuario guardado
  */
 router.post('/usuarios', (req, res) => {
-  const {nombre, apellido, tipo_doc, num_doc, email, clave, rol } = req.body;
+  const { nombre, apellido, tipo_doc, num_doc, email, clave, rol } = req.body;
   console.log(nombre, apellido, tipo_doc, num_doc, email, clave, rol);
   const query = "INSERT INTO usuario (nombre, apellido, tipo_doc, num_doc, email, clave, rol) VALUES (?, ?, ?, ?, ?, ?, ?)";
   mysqlConnection.query(query, [nombre, apellido, tipo_doc, num_doc, email, clave, rol], (err, rows, fields) => {
